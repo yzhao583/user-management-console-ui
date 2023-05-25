@@ -4,10 +4,10 @@ import { InvalidObject } from '@redhat-cloud-services/frontend-components/Invali
 
 import { Bullseye, Spinner } from '@patternfly/react-core';
 
-const SamplePage = lazy(
+const UsersPage = lazy(
   () =>
     import(
-      /* webpackChunkName: "SamplePage" */ './Routes/SamplePage/SamplePage'
+      /* webpackChunkName: "UsersPage" */ './Routes/UsersPage/UsersPage'
     )
 );
 const OopsPage = lazy(
@@ -31,7 +31,7 @@ export const Routes = () => (
     <RouterRoutes>
       <Route path="no-permissions" element={<NoPermissionsPage />} />
       <Route path="oops" element={<OopsPage />} />
-      <Route path="/" element={<SamplePage />} />
+      <Route path="/" element={<UsersPage />} />
       {/* Finally, catch all unmatched routes */}
       <Route path="*" element={<InvalidObject />} />
     </RouterRoutes>

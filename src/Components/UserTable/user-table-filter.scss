@@ -1,0 +1,16 @@
+.custom-text-filter-feedback {
+  display: block;
+  height: 29px;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 5px;
+  width: 29px;
+  z-index: 2;
+}
+
+.no-left-and-right-padding {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}

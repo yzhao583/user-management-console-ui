@@ -5,4 +5,16 @@ declare global {
   var insights: ChromeApi;
 }
 
-export {};
+interface User {
+  username: string,
+  email: string,
+  first_name: string,
+  last_name: string,
+  id: string,
+  org_admin: boolean,
+  is_internal: boolean,
+  org_id: string,
+  type: string,
+}
+
+export {User};

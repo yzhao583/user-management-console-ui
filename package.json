@@ -1,5 +1,5 @@
 {
-  "name": "frontend-starter-app",
+  "name": "user-management-console",
   "version": "1.1.0",
   "private": false,
   "engines": {
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@patternfly/react-core": "4.250.1",
-    "@patternfly/react-table": "4.111.33",
+    "@patternfly/react-table": "^4.111.33",
     "@redhat-cloud-services/frontend-components": "^3.9.25",
     "@redhat-cloud-services/frontend-components-notifications": "^3.2.12",
     "@redhat-cloud-services/frontend-components-utilities": "^3.3.7",
@@ -67,6 +67,6 @@
     "webpack-bundle-analyzer": "4.4.2"
   },
   "insights": {
-    "appname": "starter"
+    "appname": "user-management"
   }
 }

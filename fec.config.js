@@ -1,5 +1,5 @@
 module.exports = {
-  appUrl: '/staging/starter',
+  appUrl: "/iam/user-management/users",
   debug: true,
   useProxy: true,
   proxyVerbose: true,
@@ -11,15 +11,20 @@ module.exports = {
    * Add additional webpack plugins
    */
   plugins: [],
-  _unstableHotReload: process.env.HOT === 'true',
+  routes: {
+    "/api/chrome-service/v1/static": {
+      host: "http://localhost:8889",
+    },
+  },
+  _unstableHotReload: process.env.HOT === "true",
   moduleFederation: {
-    exclude: ['react-router-dom'],
+    exclude: ["react-router-dom"],
     shared: [
       {
-        'react-router-dom': {
+        "react-router-dom": {
           singleton: true,
           import: false,
-          requiredVersion: '^6.3.0',
+          requiredVersion: "^6.3.0",
         },
       },
     ],
