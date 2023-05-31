@@ -1,13 +1,16 @@
+//@ts-nocheck
 import React, { Suspense, lazy, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { Spinner, Stack, StackItem } from "@patternfly/react-core";
+import { Toolbar, ToolbarContent, Split, SplitItem, Button, Spinner, Stack, StackItem } from "@patternfly/react-core";
 import { Main } from "@redhat-cloud-services/frontend-components/Main";
 import {
   PageHeader,
   PageHeaderTitle,
 } from "@redhat-cloud-services/frontend-components";
 import { addNotification } from "@redhat-cloud-services/frontend-components-notifications/redux";
+import { parseStatus, parseJson } from "../../utils/utils";
+import { baseUrl } from "../../const";
 
 const UserTable = lazy(() => import("../../Components/UserTable/userTable"));
 const UserTableFilter = lazy(
@@ -26,34 +29,39 @@ import "./users-page.scss";
 const UsersPage = () => {
   const dispatch = useDispatch();
   const [textInputNameValue, setTextInputNameValue] = useState("");
-  const users = [
-    {
-      username: "yzhao",
-      first_name: "yu",
-      last_name: "zhao",
-      email: "yzha@redhat.com",
-      id: "0",
-      org_admin: true,
-      is_internal: true,
-      org_id: "1",
-      type: "admin",
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  const fetchUsers = async (groupID = '', offset = 0, limit = 100) => {
+    let requestOpts = {
+      method: 'GET',
+      referrerPolicy: 'no-referrer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    }
+    await fetch(`${baseUrl}/users?offset=${offset}&limit=${limit}`, requestOpts)
+      .then(res => parseStatus(res))
+      .then(res => parseJson(res))
+      .then((list) => {
+        setUsers(list.users)
+      })
+      .catch(error => {
+        dispatch(
+          addNotification({
+            variant: "danger",
+            title: "Error",
+            description: error.message,
+          })
+        );
+      })
+
+  }
 
   useEffect(() => {
     insights?.chrome?.appAction?.("user-management-users-page");
+    fetchUsers();
   }, []);
-
-  //TODO: remove this
-  const handleAlert = () => {
-    dispatch(
-      addNotification({
-        variant: "success",
-        title: "Notification title",
-        description: "notification description",
-      })
-    );
-  };
 
   return (
     <React.Fragment>
@@ -69,10 +77,23 @@ const UsersPage = () => {
         <Stack hasGutter>
           <StackItem>
             <Suspense fallback={<Spinner />}>
-              <UserTableFilter
-                textInputNameValue={textInputNameValue}
-                setTextInputNameValue={setTextInputNameValue}
-              />
+              <Split>
+                <SplitItem isFilled>
+                  <UserTableFilter
+                    textInputNameValue={textInputNameValue}
+                    setTextInputNameValue={setTextInputNameValue}
+                  />
+                </SplitItem>
+                <SplitItem>
+                  <Toolbar data-test-id="toolbar-invite-user-button">
+                    <ToolbarContent className="no-left-and-right-padding">
+                      <Button variant="primary">Invite user</Button>
+                    </ToolbarContent>
+
+                  </Toolbar>
+
+                </SplitItem>
+              </Split>
               <UserTable data={users} />
             </Suspense>
           </StackItem>

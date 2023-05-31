@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
-  cellWidth,
   Table,
   TableBody,
   TableHeader,
-  wrappable,
-  OuterScrollContainer,
-  InnerScrollContainer,
-  sortable,
-  SortByDirection,
+  fitContent,
 } from "@patternfly/react-table";
 
 import {
+  Button,
   EmptyState,
   EmptyStateBody,
   EmptyStateVariant,
@@ -43,8 +39,13 @@ const UserTable: React.FC<UserTableProps> = (props: UserTableProps) => {
     {
       title: "Email",
     },
+    { title: "", dataLabel: "Action", cellTransforms: [fitContent] },
   ];
   const [rows, setRows] = useState([]);
+
+  const activateUser = (user: User) => {
+    console.log(user);
+  };
 
   const getRows = (data: any) => {
     let rowList = [];
@@ -53,7 +54,23 @@ const UserTable: React.FC<UserTableProps> = (props: UserTableProps) => {
     if (data && data.length > 0) {
       data.forEach((user: any) => {
         rowList.push({
-          cells: [user.username, user.first_name, user.last_name, user.email],
+          cells: [
+            user.username,
+            user.first_name,
+            user.last_name,
+            user.email,
+            <div style={{ textAlign: "right" }}>
+              <Button
+                isSmall
+                variant="primary"
+                onClick={() => {
+                  activateUser(user);
+                }}
+              >
+                Activate
+              </Button>
+            </div>,
+          ],
         });
       });
     } else {

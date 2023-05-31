@@ -16,6 +16,7 @@ module.exports = {
       host: "http://localhost:8889",
     },
   },
+  // localChrome: '/Users/yuzhao/Documents/Work/insights-chrome/build',
   _unstableHotReload: process.env.HOT === "true",
   moduleFederation: {
     exclude: ["react-router-dom"],

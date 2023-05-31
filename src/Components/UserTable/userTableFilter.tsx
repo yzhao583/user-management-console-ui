@@ -35,9 +35,6 @@ const UserTableFilter: React.FC<UserTableFilterProps> = ({
               />
             </div>
           </ToolbarItem>
-          <ToolbarItem>
-            <Button variant="primary">Invite User</Button>
-          </ToolbarItem>
         </ToolbarGroup>
       </ToolbarContent>
     </Toolbar>
